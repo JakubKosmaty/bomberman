@@ -11,6 +11,7 @@ add_executable(bomberman ${SOURCE_FILES} ${INCLUDE_FILES})
 
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 find_package(SFML 2.5.1 COMPONENTS system window graphics network audio REQUIRED)
+
 if (SFML_FOUND)
     message(STATUS "SFML_INCLUDE_DIR: ${SFML_INCLUDE_DIR}")
     message(STATUS "SFML_LIBRARIES: ${SFML_LIBRARIES}")
@@ -20,3 +21,7 @@ if (SFML_FOUND)
     include_directories(${SFML_INCLUDE_DIR})
     target_link_libraries(bomberman ${SFML_LIBRARIES})
 endif()
+
+add_custom_command(TARGET bomberman PRE_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/resource/ $<TARGET_FILE_DIR:bomberman>/resource/)
