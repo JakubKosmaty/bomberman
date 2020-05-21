@@ -5,29 +5,32 @@
 #ifndef BOMBERMAN_BOMBERMANAPPLICATION_H
 #define BOMBERMAN_BOMBERMANAPPLICATION_H
 
-#include "State.h"
+#include <iostream>
+#include <fstream>
+#include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Audio.hpp>
+#include <Config.h>
+
+#include "TileMap.h"
+
 
 class BombermanApplication {
-
 private:
-    sf::RenderWindow *window{};
-    sf::Event sfEvent{};
+    sf::RenderWindow* window;
 
-    sf::Clock dtClock;
-    float dt{};
+    TileMap* map;
+
     void initWindow();
+    void initMap();
 
 public:
     BombermanApplication();
-
     virtual ~BombermanApplication();
 
-
-    void updateDt();
-    void updateSFMLEvents();
+    void run();
     void update();
     void render();
-    void run();
 };
 
 
