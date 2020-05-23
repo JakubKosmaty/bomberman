@@ -5,7 +5,6 @@
 #ifndef BOMBERMAN_BOMBERMANAPPLICATION_H
 #define BOMBERMAN_BOMBERMANAPPLICATION_H
 
-#include <iostream>
 #include <fstream>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
@@ -13,6 +12,7 @@
 #include <Config.h>
 
 #include "TileMap.h"
+#include "Player.h"
 
 
 class BombermanApplication {
@@ -20,9 +20,14 @@ private:
     sf::RenderWindow* window;
 
     TileMap* map;
+    Player* player;
+
+    float deltaTime;
+    sf::Clock clock;
 
     void initWindow();
     void initMap();
+    void initPlayer();
 
 public:
     BombermanApplication();
