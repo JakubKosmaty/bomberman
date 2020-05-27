@@ -11,18 +11,20 @@
 
 #include "Animation.h"
 #include "Collider.h"
+#include "Inputer.h"
 
 class Player : public sf::Drawable {
 private:
     sf::RectangleShape body;
 
     Animation animation;
+    Inputer inputer;
 
     unsigned row;
     float speed;
 
 public:
-    Player(const std::string& texture, sf::Vector2u imageCount, float switchTime, float speed);
+    Player(const std::string& texture, sf::Vector2u imageCount, float switchTime, float speed) : inputer(inputer);
     virtual ~Player();
 
     void update(float deltaTime);

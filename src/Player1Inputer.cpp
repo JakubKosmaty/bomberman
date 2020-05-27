@@ -1,0 +1,25 @@
+//
+// Created by Jakub Kosmaty on 27/05/2020.
+//
+
+#include "Player1Inputer.h"
+
+int Player1Inputer::getInput() {
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+    return 0;
+  }
+
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+    return 1;
+  }
+
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+    return 2;
+  }
+
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+    return 3;
+  }
+
+  return -1;
+}

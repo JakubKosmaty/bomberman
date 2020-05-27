@@ -26,21 +26,26 @@ void Player::update(float deltaTime) {
 
   bool faceRight = true;
 
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+  int input = this->inputer.getInput();
+
+  if (input == 0) {
     movement.x -= this->speed * deltaTime;
     this->row = 2;
     faceRight = false;
   }
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+
+  if (input == 1) {
     movement.x += this->speed * deltaTime;
     this->row = 2;
     faceRight = true;
   }
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+
+  if (input == 2) {
     movement.y -= this->speed * deltaTime;
     this->row = 1;
   }
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+
+  if (input == 3) {
     movement.y += this->speed * deltaTime;
     this->row = 0;
   }
