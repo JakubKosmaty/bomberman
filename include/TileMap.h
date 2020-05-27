@@ -15,6 +15,8 @@ private:
     sf::Texture tileSet;
     sf::VertexArray* vertexArray;
 
+    std::vector<int> mapArray;
+
 public:
     TileMap(sf::Vector2u tileSize);
     virtual ~TileMap();

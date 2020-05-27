@@ -7,7 +7,6 @@
 
 #include "Inputer.h"
 
-
 class Player1Inputer : public Inputer {
 public:
     virtual int getInput();

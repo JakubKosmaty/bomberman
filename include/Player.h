@@ -18,13 +18,13 @@ private:
     sf::RectangleShape body;
 
     Animation animation;
-    Inputer inputer;
+    Inputer* inputer;
 
     unsigned row;
     float speed;
 
 public:
-    Player(const std::string& texture, sf::Vector2u imageCount, float switchTime, float speed) : inputer(inputer);
+    Player(const std::string& texture, sf::Vector2f playerSize, float posX, float posY, sf::Vector2u imageCount, float switchTime, float speed, Inputer* inputer);
     virtual ~Player();
 
     void update(float deltaTime);

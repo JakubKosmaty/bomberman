@@ -3,6 +3,10 @@
 //
 
 #include "BombermanApplication.h"
+#include "Player1Inputer.h"
+#include "Player2Inputer.h"
+
+#include <iostream>
 
 void BombermanApplication::initWindow() {
   std::ifstream configFile(RESOURCE_PATH(configFile.json));
@@ -29,7 +33,8 @@ void BombermanApplication::initMap() {
 }
 
 void BombermanApplication::initPlayer() {
-  this->player = new Player(RESOURCE_PATH(player1.png), sf::Vector2u(8, 3), 0.1f, 256.0f);
+  this->player[0] = new Player(RESOURCE_PATH(player1.png), sf::Vector2f(64.0f, 128.0f), 704.0f, 0.0f, sf::Vector2u(8, 3), 0.1f, 256.0f, new Player1Inputer);
+  this->player[1] = new Player(RESOURCE_PATH(player2.png), sf::Vector2f(64.0f, 64.0f), 64.0f, 640.0f, sf::Vector2u(6, 3), 0.1f, 256.0f, new Player2Inputer);
 }
 
 BombermanApplication::BombermanApplication() {
@@ -40,6 +45,9 @@ BombermanApplication::BombermanApplication() {
 
 BombermanApplication::~BombermanApplication() {
   delete this->window;
+  delete this->map;
+  delete this->player[0];
+  delete this->player[1];
 }
 
 void BombermanApplication::run() {
@@ -60,14 +68,21 @@ void BombermanApplication::update() {
       this->window->close();
     }
   }
-  this->player->update(this->deltaTime);
+
+  if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+    std::cout << "X: " << e.mouseButton.x << " | Y: " << e.mouseButton.y << std::endl;
+  }
+
+  this->player[0]->update(this->deltaTime);
+  this->player[1]->update(this->deltaTime);
 }
 
 void BombermanApplication::render() {
   this->window->clear();
 
   this->window->draw(*this->map);
-  this->window->draw(*this->player);
+  this->window->draw(*this->player[0]);
+  this->window->draw(*this->player[1]);
 
   this->window->display();
 }

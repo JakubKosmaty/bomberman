@@ -13,18 +13,18 @@ TileMap::TileMap(sf::Vector2u tileSize) {
   this->vertexArray = new sf::VertexArray();
 
   const Map &map = Config::getConfig().getMap();
+  this->mapArray = map.getData();
 
   this->tileSet.loadFromFile(RESOURCE_PATH(mapTile.png));
 
   this->vertexArray->setPrimitiveType(sf::Quads);
   this->vertexArray->resize(map.getWidth() * map.getHeight() * 4);
 
-  std::vector<int> mapTile = map.getData();
 
   for (unsigned int i = 0; i < map.getWidth(); i++) {
     for (unsigned int j = 0; j < map.getHeight(); j++) {
 
-      int tileNumber = mapTile[i + j * map.getWidth()];
+      int tileNumber = this->mapArray[i + j * map.getWidth()];
 
       int tu = tileNumber % (this->tileSet.getSize().x / tileSize.x);
       int tv = tileNumber / (this->tileSet.getSize().x / tileSize.x);

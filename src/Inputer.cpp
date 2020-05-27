@@ -3,3 +3,7 @@
 //
 
 #include "Inputer.h"
+
+Inputer::~Inputer() {
+
+}

@@ -20,7 +20,7 @@ private:
     sf::RenderWindow* window;
 
     TileMap* map;
-    Player* player;
+    Player* player[2];
 
     float deltaTime;
     sf::Clock clock;

@@ -4,16 +4,17 @@
 
 #include "Player.h"
 
-Player::Player(const std::string& texture, sf::Vector2u imageCount, float switchTime, float speed) : animation(texture, imageCount, switchTime) {
+Player::Player(const std::string& texture, sf::Vector2f playerSize, float posX, float posY, sf::Vector2u imageCount, float switchTime, float speed, Inputer* inputer) : animation(texture, imageCount, switchTime), inputer(inputer) {
   this->speed = speed;
   this->row = 0;
 
-  this->body.setSize(sf::Vector2f(64.0f, 128.0f));
-  this->body.setPosition(64.0f, 128.0f);
+  this->body.setSize(playerSize);
+  this->body.setPosition(posX, posY);
   this->body.setTexture(&this->animation.texture);
 }
 
 Player::~Player() {
+  delete this->inputer;
 }
 
 void Player::draw(sf::RenderTarget &target, sf::RenderStates states) const {
@@ -26,7 +27,7 @@ void Player::update(float deltaTime) {
 
   bool faceRight = true;
 
-  int input = this->inputer.getInput();
+  int input = this->inputer->getInput();
 
   if (input == 0) {
     movement.x -= this->speed * deltaTime;
