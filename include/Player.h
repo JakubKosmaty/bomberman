@@ -10,6 +10,7 @@
 #include <SFML/Audio.hpp>
 
 #include "Animation.h"
+#include "Collider.h"
 
 class Player : public sf::Drawable {
 private:
@@ -27,6 +28,8 @@ public:
     void update(float deltaTime);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
+    sf::Vector2f getPosition();
+    Collider getCollider();
 };
 
 

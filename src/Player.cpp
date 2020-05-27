@@ -49,3 +49,11 @@ void Player::update(float deltaTime) {
   this->body.setTextureRect(this->animation.uvRect);
   this->body.move(movement);
 }
+
+sf::Vector2f Player::getPosition() {
+  return this->body.getPosition();
+}
+
+Collider Player::getCollider() {
+  return Collider(this->body);
+}
