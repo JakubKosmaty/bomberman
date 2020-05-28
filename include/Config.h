@@ -22,15 +22,12 @@ private:
     unsigned height;
     unsigned frameLimit;
     bool verticalSyncEnable;
+
 public:
     const std::string &getTitle() const;
-
     unsigned int getWidth() const;
-
     unsigned int getHeight() const;
-
     unsigned int getFrameLimit() const;
-
     bool isVerticalSyncEnable() const;
 
     friend void from_json(const nlohmann::json& j, WindowConfig &wp);
@@ -44,13 +41,9 @@ private:
 
 public:
     unsigned int getWidth() const;
-
     unsigned int getHeight() const;
-
-public:
     const std::vector<int> &getData() const;
 
-public:
     friend void from_json(const nlohmann::json& j, Map &map);
 };
 
@@ -67,13 +60,10 @@ private:
 
 public:
     static const Config& getConfig();
-
     static void init(nlohmann::json& j);
-
     const WindowConfig &getWindowConfig() const;
     const Map &getMap() const;
 
-public:
     friend void from_json(const nlohmann::json& j, Config &config);
 };
 

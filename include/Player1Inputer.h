@@ -12,5 +12,4 @@ public:
     virtual int getInput();
 };
 
-
 #endif //BOMBERMAN_PLAYER1INPUTER_H

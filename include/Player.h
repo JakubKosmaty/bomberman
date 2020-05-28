@@ -16,7 +16,6 @@
 class Player : public sf::Drawable {
 private:
     sf::RectangleShape body;
-
     Animation animation;
     Inputer* inputer;
 
@@ -32,6 +31,9 @@ public:
 
     sf::Vector2f getPosition();
     Collider getCollider();
+
+    float getSpeed() const;
+    const sf::RectangleShape &getBody() const;
 };
 
 

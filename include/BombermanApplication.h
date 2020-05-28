@@ -5,6 +5,7 @@
 #ifndef BOMBERMAN_BOMBERMANAPPLICATION_H
 #define BOMBERMAN_BOMBERMANAPPLICATION_H
 
+#include <iostream>
 #include <fstream>
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
@@ -13,7 +14,11 @@
 
 #include "TileMap.h"
 #include "Player.h"
+#include "Player1Inputer.h"
+#include "Player2Inputer.h"
+#include "Collider.h"
 
+//#define DEBUG
 
 class BombermanApplication {
 private:
@@ -27,15 +32,18 @@ private:
 
     void initWindow();
     void initMap();
-    void initPlayer();
+    void initPlayers();
+
+    void update();
+    void render();
+
+    friend std::ostream& operator<<(std::ostream& os, const BombermanApplication& application);
 
 public:
     BombermanApplication();
     virtual ~BombermanApplication();
 
     void run();
-    void update();
-    void render();
 };
 
 

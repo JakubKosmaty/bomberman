@@ -14,6 +14,8 @@ TileMap::TileMap(sf::Vector2u tileSize) {
 
   const Map &map = Config::getConfig().getMap();
   this->mapArray = map.getData();
+  this->mapWidth = map.getWidth();
+  this->mapHeight = map.getHeight();
 
   this->tileSet.loadFromFile(RESOURCE_PATH(mapTile.png));
 
@@ -21,15 +23,15 @@ TileMap::TileMap(sf::Vector2u tileSize) {
   this->vertexArray->resize(map.getWidth() * map.getHeight() * 4);
 
 
-  for (unsigned int i = 0; i < map.getWidth(); i++) {
-    for (unsigned int j = 0; j < map.getHeight(); j++) {
+  for (int i = 0; i < this->mapWidth; i++) {
+    for (int j = 0; j < this->mapHeight; j++) {
 
-      int tileNumber = this->mapArray[i + j * map.getWidth()];
+      int tileNumber = this->mapArray[i + j * this->mapWidth];
 
       int tu = tileNumber % (this->tileSet.getSize().x / tileSize.x);
       int tv = tileNumber / (this->tileSet.getSize().x / tileSize.x);
 
-      sf::Vertex *quad = &((*this->vertexArray)[(i + j * map.getWidth() ) * 4]);
+      sf::Vertex *quad = &((*this->vertexArray)[(i + j * this->mapWidth) * 4]);
 
       quad[0].position = sf::Vector2f(i * tileSize.x, j * tileSize.y);
       quad[1].position = sf::Vector2f((i + 1) * tileSize.x, j * tileSize.y);
@@ -47,6 +49,18 @@ TileMap::TileMap(sf::Vector2u tileSize) {
 
 TileMap::~TileMap() {
   delete this->vertexArray;
+}
+
+const std::vector<int> &TileMap::getMapArray() const {
+  return mapArray;
+}
+
+unsigned TileMap::getMapWidth() const {
+  return mapWidth;
+}
+
+unsigned TileMap::getMapHeight() const {
+  return mapHeight;
 }
 
 

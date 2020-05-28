@@ -21,7 +21,6 @@ Animation::~Animation() {
 }
 
 void Animation::update(int row, float deltaTime, bool faceRight) {
-
   this->currentImage.y = row;
   this->totalTime += deltaTime;
 

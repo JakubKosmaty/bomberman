@@ -16,12 +16,18 @@ private:
     sf::VertexArray* vertexArray;
 
     std::vector<int> mapArray;
+    unsigned mapWidth;
+    unsigned mapHeight;
 
 public:
     TileMap(sf::Vector2u tileSize);
     virtual ~TileMap();
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
+    const std::vector<int> &getMapArray() const;
+    unsigned getMapWidth() const;
+    unsigned getMapHeight() const;
 };
 
 

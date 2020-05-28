@@ -3,10 +3,6 @@
 //
 
 #include "BombermanApplication.h"
-#include "Player1Inputer.h"
-#include "Player2Inputer.h"
-
-#include <iostream>
 
 void BombermanApplication::initWindow() {
   std::ifstream configFile(RESOURCE_PATH(configFile.json));
@@ -32,7 +28,7 @@ void BombermanApplication::initMap() {
   this->map = new TileMap(sf::Vector2u(64, 64));
 }
 
-void BombermanApplication::initPlayer() {
+void BombermanApplication::initPlayers() {
   this->player[0] = new Player(RESOURCE_PATH(player1.png), sf::Vector2f(64.0f, 128.0f), 704.0f, 0.0f, sf::Vector2u(8, 3), 0.1f, 256.0f, new Player1Inputer);
   this->player[1] = new Player(RESOURCE_PATH(player2.png), sf::Vector2f(64.0f, 64.0f), 64.0f, 640.0f, sf::Vector2u(6, 3), 0.1f, 256.0f, new Player2Inputer);
 }
@@ -40,7 +36,9 @@ void BombermanApplication::initPlayer() {
 BombermanApplication::BombermanApplication() {
   this->initWindow();
   this->initMap();
-  this->initPlayer();
+  this->initPlayers();
+
+  std::cout << *this;
 }
 
 BombermanApplication::~BombermanApplication() {
@@ -59,22 +57,24 @@ void BombermanApplication::run() {
 }
 
 void BombermanApplication::update() {
-  sf::Event e;
-  while (this->window->pollEvent(e)) {
-    if (e.Event::type == sf::Event::Closed) {
+  sf::Event event;
+  while (this->window->pollEvent(event)) {
+    if (event.Event::type == sf::Event::Closed) {
       this->window->close();
     }
-    if(e.Event::KeyPressed && e.Event::key.code == sf::Keyboard::Escape) {
+    if(event.Event::KeyPressed && event.Event::key.code == sf::Keyboard::Escape) {
       this->window->close();
     }
-  }
-
-  if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-    std::cout << "X: " << e.mouseButton.x << " | Y: " << e.mouseButton.y << std::endl;
   }
 
   this->player[0]->update(this->deltaTime);
   this->player[1]->update(this->deltaTime);
+
+#ifdef DEBUG
+  if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+    std::cout << "X: " << e.mouseButton.x << " | Y: " << e.mouseButton.y << std::endl;
+  }
+#endif
 }
 
 void BombermanApplication::render() {
@@ -87,4 +87,42 @@ void BombermanApplication::render() {
   this->window->display();
 }
 
+std::ostream& operator<<(std::ostream& os, const BombermanApplication& application)
+{
+#ifdef DEBUG
+  os << "Tryb developerski wlaczony!"
+  << "\n";
+#endif
+
+  for (auto& p : application.player) {
+    os
+    << "-----------Player-----------\n"
+    << "Speed: "
+    << p->getSpeed()
+    << "\n"
+    << "Position: X: "
+    << p->getBody().getPosition().x
+    << " Y: "
+    << p->getBody().getPosition().y
+    << "\n";
+  }
+
+  os
+  << "-----------Map-----------\nSize: \nWidth: "
+  << application.map->getMapWidth()
+  << "\nHeight: "
+  << application.map->getMapHeight()
+  << "\n"
+  << "Tile Map\n";
+
+  const std::vector<int> map = application.map->getMapArray();
+
+  for (int x = 0; x < application.map->getMapWidth(); x++) {
+    for (int y = 0; y < application.map->getMapHeight(); y++) {
+      os << map[x * application.map->getMapWidth()+ y] << " ";
+    }
+    os << "\n";
+  }
+  return os;
+}
 

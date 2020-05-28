@@ -23,9 +23,6 @@ public:
     bool checkCollision(Collider &other, float push);
     sf::Vector2f getPosition();
     sf::Vector2f getHalfSize();
-
-
-
 };
 
 

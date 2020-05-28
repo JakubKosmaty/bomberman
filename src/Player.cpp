@@ -1,5 +1,5 @@
 //
-// Created by Jakub Kosmaty on 21 /05/2020.
+// Created by Jakub Kosmaty on 21/05/2020.
 //
 
 #include "Player.h"
@@ -11,6 +11,7 @@ Player::Player(const std::string& texture, sf::Vector2f playerSize, float posX, 
   this->body.setSize(playerSize);
   this->body.setPosition(posX, posY);
   this->body.setTexture(&this->animation.texture);
+  this->body.setTextureRect(this->animation.uvRect);
 }
 
 Player::~Player() {
@@ -23,11 +24,14 @@ void Player::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 }
 
 void Player::update(float deltaTime) {
+  int input = this->inputer->getInput();
+  if (input == -1) {
+    return;
+  }
+
   sf::Vector2f movement(0.00f, 0.00f);
 
   bool faceRight = true;
-
-  int input = this->inputer->getInput();
 
   if (input == 0) {
     movement.x -= this->speed * deltaTime;
@@ -62,4 +66,12 @@ sf::Vector2f Player::getPosition() {
 
 Collider Player::getCollider() {
   return Collider(this->body);
+}
+
+const sf::RectangleShape &Player::getBody() const {
+  return body;
+}
+
+float Player::getSpeed() const {
+  return speed;
 }
