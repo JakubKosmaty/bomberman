@@ -25,12 +25,13 @@ void BombermanApplication::initWindow() {
 }
 
 void BombermanApplication::initMap() {
-  this->map = new TileMap(sf::Vector2u(64, 64));
+  this->map = new TileMap();
+  this->map->update(sf::Vector2u(64, 64));
 }
 
 void BombermanApplication::initPlayers() {
-  this->player[0] = new Player(RESOURCE_PATH(player1.png), sf::Vector2f(64.0f, 128.0f), 704.0f, 0.0f, sf::Vector2u(8, 3), 0.1f, 256.0f, new Player1Inputer);
-  this->player[1] = new Player(RESOURCE_PATH(player2.png), sf::Vector2f(64.0f, 64.0f), 64.0f, 640.0f, sf::Vector2u(6, 3), 0.1f, 256.0f, new Player2Inputer);
+  this->player[0] = new Player(RESOURCE_PATH(player1.png), sf::Vector2f(64.0f, 128.0f), sf::Vector2f(11 * 64 + 32, 1 * 64 + 32), sf::Vector2u(8, 3), 0.1f, 4.0f, new Player1Inputer);
+  this->player[1] = new Player(RESOURCE_PATH(player2.png), sf::Vector2f(64.0f, 64.0f), sf::Vector2f(1 * 64 + 32, 11 * 64 + 32), sf::Vector2u(6, 3), 0.1f, 4.0f, new Player2Inputer);
 }
 
 BombermanApplication::BombermanApplication() {
@@ -38,7 +39,7 @@ BombermanApplication::BombermanApplication() {
   this->initMap();
   this->initPlayers();
 
-  std::cout << *this;
+  //std::cout << *this;
 }
 
 BombermanApplication::~BombermanApplication() {
@@ -67,8 +68,8 @@ void BombermanApplication::update() {
     }
   }
 
-  this->player[0]->update(this->deltaTime);
-  this->player[1]->update(this->deltaTime);
+  this->player[0]->update(this->deltaTime, this->map->getMapArray());
+  this->player[1]->update(this->deltaTime, this->map->getMapArray());
 
 #ifdef DEBUG
   if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
@@ -90,7 +91,7 @@ void BombermanApplication::render() {
 std::ostream& operator<<(std::ostream& os, const BombermanApplication& application)
 {
 #ifdef DEBUG
-  os << "Tryb developerski wlaczony!"
+  os << "Developer Mode ON!"
   << "\n";
 #endif
 
@@ -119,7 +120,7 @@ std::ostream& operator<<(std::ostream& os, const BombermanApplication& applicati
 
   for (int x = 0; x < application.map->getMapWidth(); x++) {
     for (int y = 0; y < application.map->getMapHeight(); y++) {
-      os << map[x * application.map->getMapWidth()+ y] << " ";
+      os << map[x * application.map->getMapWidth() + y] << " ";
     }
     os << "\n";
   }

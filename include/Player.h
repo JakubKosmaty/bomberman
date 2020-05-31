@@ -10,8 +10,8 @@
 #include <SFML/Audio.hpp>
 
 #include "Animation.h"
-#include "Collider.h"
 #include "Inputer.h"
+#include "Bomb.h"
 
 class Player : public sf::Drawable {
 private:
@@ -22,15 +22,23 @@ private:
     unsigned row;
     float speed;
 
+    int direction;
+    sf::Vector2f playerPos;
+    sf::Vector2f destination;
+    bool isGoing;
+
+    bool faceRight;
+
+    sf::Vector2f directionToStep(int dir);
+
+    bool checkCollision(const std::vector<int> map) const;
+
 public:
-    Player(const std::string& texture, sf::Vector2f playerSize, float posX, float posY, sf::Vector2u imageCount, float switchTime, float speed, Inputer* inputer);
+    Player(const std::string& texture, sf::Vector2f playerSize, sf::Vector2f playerPos, sf::Vector2u imageCount, float switchTime, float speed, Inputer* inputer);
     virtual ~Player();
 
-    void update(float deltaTime);
+    void update(float deltaTime, const std::vector<int> map);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
-    sf::Vector2f getPosition();
-    Collider getCollider();
 
     float getSpeed() const;
     const sf::RectangleShape &getBody() const;

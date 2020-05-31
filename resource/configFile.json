@@ -3,7 +3,7 @@
     "title":"Bomberman",
     "width":832,
     "height":832,
-    "frameLimit":120,
+    "frameLimit":60,
     "verticalSyncEnable":false
   },
   "map":{

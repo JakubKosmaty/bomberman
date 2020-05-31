@@ -20,9 +20,10 @@ private:
     unsigned mapHeight;
 
 public:
-    TileMap(sf::Vector2u tileSize);
+    TileMap();
     virtual ~TileMap();
 
+    void update(sf::Vector2u tileSize);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
     const std::vector<int> &getMapArray() const;

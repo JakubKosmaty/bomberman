@@ -16,7 +16,6 @@
 #include "Player.h"
 #include "Player1Inputer.h"
 #include "Player2Inputer.h"
-#include "Collider.h"
 
 //#define DEBUG
 
