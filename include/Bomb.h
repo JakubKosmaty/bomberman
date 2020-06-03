@@ -10,26 +10,27 @@
 
 class Bomb {
 private:
-
-    int radius;
-
-
-
-public:
+    sf::Vector2i bombPos;
     sf::Clock bombClock;
     sf::Clock fireClock;
 
+    int radius;
     bool clean;
-    bool used;
-    sf::Vector2i bombPos;
+public:
+    bool isUsed() const;
 
+private:
+    bool used;
+
+    void setFire(TileMap* tileMap);
+    void cleanFire(TileMap* tileMap);
+
+public:
     Bomb(int radius = 4);
     virtual ~Bomb();
 
     void spawn(sf::Vector2i bombPos, TileMap* tileMap);
     void check(TileMap* tileMap);
-    void cleanFire(TileMap* tileMap);
-
 };
 
 

@@ -19,6 +19,7 @@ private:
     sf::RectangleShape body;
     Animation animation;
     Inputer* inputer;
+    Bomb bomb;
 
     unsigned row;
     float speed;
@@ -35,8 +36,6 @@ private:
     bool checkCollision(const std::vector<int> map) const;
 
 public:
-    Bomb bomb;
-
     Player(const std::string& texture, sf::Vector2f playerSize, sf::Vector2f playerPos, sf::Vector2u imageCount, float switchTime, float speed, Inputer* inputer);
     virtual ~Player();
 

@@ -12,30 +12,78 @@ void from_json(const nlohmann::json &j, WindowConfig &wp) {
   j.at("verticalSyncEnable").get_to(wp.verticalSyncEnable);
 }
 
-void from_json(const nlohmann::json &j, Map &map) {
+void from_json(const nlohmann::json &j, MapConfig &map) {
   j.at("data").get_to(map.data);
   j.at("width").get_to(map.width);
   j.at("height").get_to(map.height);
   j.at("tileSize").get_to(map.tileSize);
 }
 
-const std::vector<int> &Map::getData() const {
-  return data;
+void from_json(const nlohmann::json &j, PlayersConfig &players) {
+  j.at("texture").get_to(players.texture);
+  j.at("width").get_to(players.width);
+  j.at("height").get_to(players.height);
+  j.at("spawnX").get_to(players.spawnX);
+  j.at("spawnY").get_to(players.spawnY);
+  j.at("animationX").get_to(players.animationX);
+  j.at("animationY").get_to(players.animationY);
+  j.at("switchTime").get_to(players.switchTime);
+  j.at("speed").get_to(players.speed);
 }
 
-unsigned int Map::getWidth() const {
+const std::string &PlayersConfig::getTexture() const {
+  return texture;
+}
+
+float PlayersConfig::getWidth() const {
   return width;
 }
 
-unsigned int Map::getHeight() const {
+float PlayersConfig::getHeight() const {
   return height;
 }
 
-unsigned int Map::getTileSize() const {
+int PlayersConfig::getSpawnX() const {
+  return spawnX;
+}
+
+int PlayersConfig::getSpawnY() const {
+  return spawnY;
+}
+
+int PlayersConfig::getAnimationX() const {
+  return animationX;
+}
+
+int PlayersConfig::getAnimationY() const {
+  return animationY;
+}
+
+float PlayersConfig::getSwitchTime() const {
+  return switchTime;
+}
+
+float PlayersConfig::getSpeed() const {
+  return speed;
+}
+
+const std::vector<int> &MapConfig::getData() const {
+  return data;
+}
+
+unsigned int MapConfig::getWidth() const {
+  return width;
+}
+
+unsigned int MapConfig::getHeight() const {
+  return height;
+}
+
+unsigned int MapConfig::getTileSize() const {
   return tileSize;
 }
 
-const std::string &Map::getTexture() const {
+const std::string &MapConfig::getTexture() const {
   return texture;
 }
 
@@ -48,7 +96,7 @@ const WindowConfig &Config::getWindowConfig() const {
   return windowConfig;
 }
 
-const Map &Config::getMap() const {
+const MapConfig &Config::getMap() const {
   return map;
 }
 

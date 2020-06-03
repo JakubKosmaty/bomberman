@@ -33,7 +33,7 @@ public:
     friend void from_json(const nlohmann::json& j, WindowConfig &wp);
 };
 
-class Map {
+class MapConfig {
 private:
     std::vector<int> data;
     unsigned width;
@@ -48,13 +48,39 @@ public:
     const std::vector<int> &getData() const;
     const std::string &getTexture() const;
 
-    friend void from_json(const nlohmann::json& j, Map &map);
+    friend void from_json(const nlohmann::json& j, MapConfig &map);
+};
+
+class PlayersConfig {
+private:
+    std::string texture;
+    float width;
+    float height;
+    int spawnX;
+    int spawnY;
+    int animationX;
+    int animationY;
+    float switchTime;
+    float speed;
+
+public:
+    const std::string &getTexture() const;
+    float getWidth() const;
+    float getHeight() const;
+    int getSpawnX() const;
+    int getSpawnY() const;
+    int getAnimationX() const;
+    int getAnimationY() const;
+    float getSwitchTime() const;
+    float getSpeed() const;
+
+    friend void from_json(const nlohmann::json& j, PlayersConfig &players);
 };
 
 class Config {
 private:
     WindowConfig windowConfig;
-    Map map;
+    MapConfig map;
 
     Config();
     Config(const Config&) = delete;
@@ -66,7 +92,7 @@ public:
     static const Config& getConfig();
     static void init(nlohmann::json& j);
     const WindowConfig &getWindowConfig() const;
-    const Map &getMap() const;
+    const MapConfig &getMap() const;
 
     friend void from_json(const nlohmann::json& j, Config &config);
 };

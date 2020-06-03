@@ -16,8 +16,8 @@ Player::Player(const std::string& texture, sf::Vector2f playerSize, sf::Vector2f
   this->body.setSize(playerSize);
   this->body.setOrigin(playerSize.x / 2, playerSize.y > 64 ? 96 : 32);
   this->body.setPosition(playerPos);
-  this->body.setTexture(&this->animation.texture);
-  this->body.setTextureRect(this->animation.uvRect);
+  this->body.setTexture(&this->animation.getTexture());
+  this->body.setTextureRect(this->animation.getUvRect());
 }
 
 Player::~Player() {
@@ -25,7 +25,7 @@ Player::~Player() {
 }
 
 void Player::draw(sf::RenderTarget &target, sf::RenderStates states) const {
-  states.texture = &this->animation.texture;
+  states.texture = &this->animation.getTexture();
   target.draw(this->body, states);
 }
 
@@ -57,16 +57,16 @@ bool Player::checkCollision(const std::vector<int> map) const {
 }
 
 void Player::update(float deltaTime, TileMap* tileMap) {
-  if (this->bomb.used && !this->bomb.clean) {
-    this->bomb.check(tileMap);
-  }
-
-  if (this->bomb.clean && this->bomb.fireClock.getElapsedTime().asSeconds() >= 2) {
-    this->bomb.cleanFire(tileMap);
-  }
-
+  this->bomb.check(tileMap);
 
   int input = this->inputer->getInput();
+
+  if (input == 4 && !this->bomb.isUsed()) {
+    sf::Vector2i bombPos;
+    bombPos.x = this->body.getPosition().x / 64;
+    bombPos.y = this->body.getPosition().y / 64;
+    this->bomb.spawn(bombPos, tileMap);
+  }
 
   if (this->isGoing) {
     if (checkCollision(tileMap->layers[0]->getMapArray())|| checkCollision(tileMap->layers[1]->getMapArray())) {
@@ -86,7 +86,7 @@ void Player::update(float deltaTime, TileMap* tileMap) {
       }
 
       this->animation.update(this->row, deltaTime, this->faceRight);
-      this->body.setTextureRect(this->animation.uvRect);
+      this->body.setTextureRect(this->animation.getUvRect());
       this->body.move(step);
       return;
     }
@@ -96,13 +96,6 @@ void Player::update(float deltaTime, TileMap* tileMap) {
 
   if (input == -1) {
     return;
-  }
-
-  if (input == 4 && !this->bomb.used) {
-      sf::Vector2i bombPos;
-      bombPos.x = this->body.getPosition().x / 64;
-      bombPos.y = this->body.getPosition().y / 64;
-      this->bomb.spawn(bombPos, tileMap);
   }
 
   this->isGoing = true;

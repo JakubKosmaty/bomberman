@@ -16,10 +16,6 @@ Animation::Animation(const std::string& texture, sf::Vector2u imageCount, float 
   this->uvRect.height = this->texture.getSize().y / float(imageCount.y);
 }
 
-Animation::~Animation() {
-
-}
-
 void Animation::update(int row, float deltaTime, bool faceRight) {
   this->currentImage.y = row;
   this->totalTime += deltaTime;
@@ -42,5 +38,13 @@ void Animation::update(int row, float deltaTime, bool faceRight) {
     this->uvRect.left = this->currentImage.x * abs(this->uvRect.width);
     this->uvRect.width = abs(this->uvRect.width);
   }
+}
+
+const sf::Texture &Animation::getTexture() const {
+  return texture;
+}
+
+const sf::IntRect &Animation::getUvRect() const {
+  return uvRect;
 }
 

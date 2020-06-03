@@ -14,6 +14,16 @@ Bomb::~Bomb() {
 
 }
 
+void Bomb::check(TileMap *tileMap) {
+  if (this->used && !this->clean && this->bombClock.getElapsedTime().asSeconds() >= 2) {
+    this->setFire(tileMap);
+  }
+
+  if (this->clean && this->fireClock.getElapsedTime().asSeconds() >= 2) {
+    this->cleanFire(tileMap);
+  }
+}
+
 void Bomb::spawn(sf::Vector2i bombPos, TileMap* tileMap) {
   this->bombClock.restart();
 
@@ -25,7 +35,7 @@ void Bomb::spawn(sf::Vector2i bombPos, TileMap* tileMap) {
   this->used = true;
 }
 
-void Bomb::check(TileMap* tileMap) {
+void Bomb::setFire(TileMap* tileMap) {
   if (this->bombClock.getElapsedTime().asSeconds() >= 2) {
 
     for (int i = 0; i < this->radius; i++) {
@@ -125,6 +135,10 @@ void Bomb::cleanFire(TileMap* tileMap) {
   this->clean = false;
   this->used = false;
 
+}
+
+bool Bomb::isUsed() const {
+  return used;
 }
 
 

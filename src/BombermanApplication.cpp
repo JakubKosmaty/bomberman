@@ -32,9 +32,9 @@ void BombermanApplication::initMap() {
 }
 
 void BombermanApplication::initPlayers() {
-  this->players.push_back(new Player(RESOURCE_PATH(player1.png), sf::Vector2f(64.0f, 128.0f), sf::Vector2f(11 * 64 + 32, 1 * 64 + 32), sf::Vector2u(8, 3), 0.1f, 4.0f, new Player1Inputer
+  this->players.push_back(new Player(RESOURCE_PATH(player0.png), sf::Vector2f(64.0f, 128.0f), sf::Vector2f(11 * 64 + 32, 1 * 64 + 32), sf::Vector2u(8, 3), 0.1f, 4.0f, new Player1Inputer
   ));
-  this->players.push_back(new Player(RESOURCE_PATH(player2.png), sf::Vector2f(64.0f, 64.0f), sf::Vector2f(1 * 64 + 32, 11 * 64 + 32), sf::Vector2u(6, 3), 0.1f, 4.0f, new Player2Inputer
+  this->players.push_back(new Player(RESOURCE_PATH(player1.png), sf::Vector2f(64.0f, 64.0f), sf::Vector2f(1 * 64 + 32, 11 * 64 + 32), sf::Vector2u(6, 3), 0.1f, 4.0f, new Player2Inputer
   ));
 }
 

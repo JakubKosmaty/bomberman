@@ -9,7 +9,7 @@
 
 class Inputer {
 public:
-    virtual ~Inputer();
+    virtual ~Inputer() {}
     virtual int getInput() = 0;
 };
 

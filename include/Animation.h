@@ -11,16 +11,17 @@ class Animation {
 private:
     sf::Vector2u imageCount;
     sf::Vector2u currentImage;
+    sf::Texture texture;
+    sf::IntRect uvRect;
 
     float totalTime;
     float switchTime;
 
 public:
     Animation(const std::string& texture, sf::Vector2u imageCount, float switchTime);
-    virtual ~Animation();
 
-    sf::Texture texture;
-    sf::IntRect uvRect;
+    const sf::Texture &getTexture() const;
+    const sf::IntRect &getUvRect() const;
 
     void update(int row, float deltaTime, bool faceRight);
 };

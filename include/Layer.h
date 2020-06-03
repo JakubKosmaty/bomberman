@@ -12,7 +12,7 @@ class Layer : public sf::Drawable {
 
 private:
     sf::Texture tileSet;
-    sf::VertexArray* vertexArray;
+    sf::VertexArray vertexArray;
 
     unsigned mapWidth;
     unsigned mapHeight;
@@ -23,7 +23,6 @@ public:
     const std::vector<int> &getMapArray() const;
 
     Layer();
-    virtual ~Layer();
 
     void update();
 

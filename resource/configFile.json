@@ -182,5 +182,29 @@
     "height":13,
     "tileSize":64,
     "texture":"mapTile.png"
+  },
+  "player": {
+    "0": {
+      "texture":"player0.png",
+      "width": 64.0,
+      "height": 128.0,
+      "spawnX": 11,
+      "spawnY": 1,
+      "animationX": 8,
+      "animationY": 3,
+      "switchTime": 0.1,
+      "speed": 4.0
+    },
+    "1": {
+      "texture":"player1.png",
+      "width": 64.0,
+      "height": 64.0,
+      "spawnX": 1,
+      "spawnY": 11,
+      "animationX": 6,
+      "animationY": 3,
+      "switchTime": 0.1,
+      "speed": 4.0
+    }
   }
 }
