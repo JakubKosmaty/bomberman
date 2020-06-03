@@ -12,6 +12,7 @@
 #include "Animation.h"
 #include "Inputer.h"
 #include "Bomb.h"
+#include "TileMap.h"
 
 class Player : public sf::Drawable {
 private:
@@ -34,10 +35,12 @@ private:
     bool checkCollision(const std::vector<int> map) const;
 
 public:
+    Bomb bomb;
+
     Player(const std::string& texture, sf::Vector2f playerSize, sf::Vector2f playerPos, sf::Vector2u imageCount, float switchTime, float speed, Inputer* inputer);
     virtual ~Player();
 
-    void update(float deltaTime, const std::vector<int> map);
+    void update(float deltaTime, TileMap* tileMap);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
     float getSpeed() const;

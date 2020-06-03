@@ -9,26 +9,19 @@
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 #include "Config.h"
+#include "Layer.h"
 
 class TileMap : public sf::Drawable {
 private:
-    sf::Texture tileSet;
-    sf::VertexArray* vertexArray;
 
-    std::vector<int> mapArray;
-    unsigned mapWidth;
-    unsigned mapHeight;
 
 public:
+    std::vector<Layer*> layers;
+
     TileMap();
     virtual ~TileMap();
 
-    void update(sf::Vector2u tileSize);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
-    const std::vector<int> &getMapArray() const;
-    unsigned getMapWidth() const;
-    unsigned getMapHeight() const;
 };
 
 

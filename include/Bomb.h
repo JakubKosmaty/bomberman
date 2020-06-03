@@ -6,18 +6,30 @@
 #define BOMBERMAN_BOMB_H
 
 #include <SFML/Graphics.hpp>
+#include "TileMap.h"
 
-class Bomb : public sf::Drawable {
+class Bomb {
 private:
-    sf::RectangleShape body;
+
     int radius;
 
 
+
 public:
-    Bomb();
+    sf::Clock bombClock;
+    sf::Clock fireClock;
+
+    bool clean;
+    bool used;
+    sf::Vector2i bombPos;
+
+    Bomb(int radius = 4);
     virtual ~Bomb();
 
-    void spawn(sf::Vector2f playerPos);
+    void spawn(sf::Vector2i bombPos, TileMap* tileMap);
+    void check(TileMap* tileMap);
+    void cleanFire(TileMap* tileMap);
+
 };
 
 

@@ -24,7 +24,7 @@ private:
     sf::RenderWindow* window;
 
     TileMap* map;
-    Player* player[2];
+    std::vector<Player*> players;
 
     float deltaTime;
     sf::Clock clock;

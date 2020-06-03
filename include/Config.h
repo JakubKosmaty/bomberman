@@ -38,11 +38,15 @@ private:
     std::vector<int> data;
     unsigned width;
     unsigned height;
+    unsigned tileSize;
+    std::string texture;
 
 public:
     unsigned int getWidth() const;
     unsigned int getHeight() const;
+    unsigned int getTileSize() const;
     const std::vector<int> &getData() const;
+    const std::string &getTexture() const;
 
     friend void from_json(const nlohmann::json& j, Map &map);
 };

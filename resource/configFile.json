@@ -179,6 +179,8 @@
       0
     ],
     "width":13,
-    "height":13
+    "height":13,
+    "tileSize":64,
+    "texture":"mapTile.png"
   }
 }

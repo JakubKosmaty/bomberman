@@ -16,6 +16,7 @@ void from_json(const nlohmann::json &j, Map &map) {
   j.at("data").get_to(map.data);
   j.at("width").get_to(map.width);
   j.at("height").get_to(map.height);
+  j.at("tileSize").get_to(map.tileSize);
 }
 
 const std::vector<int> &Map::getData() const {
@@ -28,6 +29,14 @@ unsigned int Map::getWidth() const {
 
 unsigned int Map::getHeight() const {
   return height;
+}
+
+unsigned int Map::getTileSize() const {
+  return tileSize;
+}
+
+const std::string &Map::getTexture() const {
+  return texture;
 }
 
 void from_json(const nlohmann::json &j, Config &config) {

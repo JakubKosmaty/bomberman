@@ -53,14 +53,23 @@ bool Player::checkCollision(const std::vector<int> map) const {
   int x = this->destination.x / 64;
   int y = this->destination.y / 64;
   int collision = map[x + y * 13];
-  return collision == 0 || collision == 2;
+  return collision == 0 || collision == 2 || collision == 3;
 }
 
-void Player::update(float deltaTime, const std::vector<int> map) {
+void Player::update(float deltaTime, TileMap* tileMap) {
+  if (this->bomb.used && !this->bomb.clean) {
+    this->bomb.check(tileMap);
+  }
+
+  if (this->bomb.clean && this->bomb.fireClock.getElapsedTime().asSeconds() >= 2) {
+    this->bomb.cleanFire(tileMap);
+  }
+
+
   int input = this->inputer->getInput();
 
   if (this->isGoing) {
-    if (checkCollision(map)) {
+    if (checkCollision(tileMap->layers[0]->getMapArray())|| checkCollision(tileMap->layers[1]->getMapArray())) {
       this->isGoing = false;
       return;
     }
@@ -87,6 +96,13 @@ void Player::update(float deltaTime, const std::vector<int> map) {
 
   if (input == -1) {
     return;
+  }
+
+  if (input == 4 && !this->bomb.used) {
+      sf::Vector2i bombPos;
+      bombPos.x = this->body.getPosition().x / 64;
+      bombPos.y = this->body.getPosition().y / 64;
+      this->bomb.spawn(bombPos, tileMap);
   }
 
   this->isGoing = true;

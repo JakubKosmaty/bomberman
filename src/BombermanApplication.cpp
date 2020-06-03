@@ -26,12 +26,16 @@ void BombermanApplication::initWindow() {
 
 void BombermanApplication::initMap() {
   this->map = new TileMap();
-  this->map->update(sf::Vector2u(64, 64));
+
+  this->map->layers.push_back(new Layer);
+  this->map->layers.push_back(new Layer);
 }
 
 void BombermanApplication::initPlayers() {
-  this->player[0] = new Player(RESOURCE_PATH(player1.png), sf::Vector2f(64.0f, 128.0f), sf::Vector2f(11 * 64 + 32, 1 * 64 + 32), sf::Vector2u(8, 3), 0.1f, 4.0f, new Player1Inputer);
-  this->player[1] = new Player(RESOURCE_PATH(player2.png), sf::Vector2f(64.0f, 64.0f), sf::Vector2f(1 * 64 + 32, 11 * 64 + 32), sf::Vector2u(6, 3), 0.1f, 4.0f, new Player2Inputer);
+  this->players.push_back(new Player(RESOURCE_PATH(player1.png), sf::Vector2f(64.0f, 128.0f), sf::Vector2f(11 * 64 + 32, 1 * 64 + 32), sf::Vector2u(8, 3), 0.1f, 4.0f, new Player1Inputer
+  ));
+  this->players.push_back(new Player(RESOURCE_PATH(player2.png), sf::Vector2f(64.0f, 64.0f), sf::Vector2f(1 * 64 + 32, 11 * 64 + 32), sf::Vector2u(6, 3), 0.1f, 4.0f, new Player2Inputer
+  ));
 }
 
 BombermanApplication::BombermanApplication() {
@@ -45,8 +49,10 @@ BombermanApplication::BombermanApplication() {
 BombermanApplication::~BombermanApplication() {
   delete this->window;
   delete this->map;
-  delete this->player[0];
-  delete this->player[1];
+
+  for (int i = 0; i < players.size(); i++) {
+    delete this->players[i];
+  }
 }
 
 void BombermanApplication::run() {
@@ -68,22 +74,19 @@ void BombermanApplication::update() {
     }
   }
 
-  this->player[0]->update(this->deltaTime, this->map->getMapArray());
-  this->player[1]->update(this->deltaTime, this->map->getMapArray());
-
-#ifdef DEBUG
-  if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-    std::cout << "X: " << e.mouseButton.x << " | Y: " << e.mouseButton.y << std::endl;
+  for (int i = 0; i < players.size(); i++) {
+    this->players[i]->update(this->deltaTime, this->map);
   }
-#endif
 }
 
 void BombermanApplication::render() {
   this->window->clear();
 
   this->window->draw(*this->map);
-  this->window->draw(*this->player[0]);
-  this->window->draw(*this->player[1]);
+
+  for (int i = 0; i < players.size(); i++) {
+    this->window->draw(*this->players[i]);
+  }
 
   this->window->display();
 }
@@ -95,7 +98,7 @@ std::ostream& operator<<(std::ostream& os, const BombermanApplication& applicati
   << "\n";
 #endif
 
-  for (auto& p : application.player) {
+  for (auto& p : application.players) {
     os
     << "-----------Player-----------\n"
     << "Speed: "
@@ -108,22 +111,6 @@ std::ostream& operator<<(std::ostream& os, const BombermanApplication& applicati
     << "\n";
   }
 
-  os
-  << "-----------Map-----------\nSize: \nWidth: "
-  << application.map->getMapWidth()
-  << "\nHeight: "
-  << application.map->getMapHeight()
-  << "\n"
-  << "Tile Map\n";
-
-  const std::vector<int> map = application.map->getMapArray();
-
-  for (int x = 0; x < application.map->getMapWidth(); x++) {
-    for (int y = 0; y < application.map->getMapHeight(); y++) {
-      os << map[x * application.map->getMapWidth() + y] << " ";
-    }
-    os << "\n";
-  }
   return os;
 }
 
