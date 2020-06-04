@@ -1,19 +1,25 @@
 # Bomberman Game
 
-## Rules
+### Rules
 
-- Similar to original bomberman game - https://en.wikipedia.org/wiki/Bomberman
+Similar to original bomberman game - https://en.wikipedia.org/wiki/Bomberman
 
-### Player 1
+### Control
 
-- Movement - WASD 
-- Place Bomb - SPACE
+#### Player 1
 
-### Player 2
+- :running: Movement - <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd>
+- :bomb: Place Bomb - <kbd>Space</kbd>
 
-- Movement - ARROWS
-- Place Bomb - ENTER
+#### Player 2
 
+- :running: Movement - <kbd>:arrow_left:</kbd> <kbd>:arrow_up:</kbd> <kbd>:arrow_down:</kbd> <kbd>:arrow_right:</kbd>
+- :bomb: Place Bomb - <kbd>Enter</kbd>
+
+### Built With
+
+- [SFML](https://www.sfml-dev.org/)
+- [nlohmann JSON](https://github.com/nlohmann/json)
 
 ### Screenshots
 
