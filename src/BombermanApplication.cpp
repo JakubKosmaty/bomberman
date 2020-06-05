@@ -5,6 +5,8 @@
 #include "BombermanApplication.h"
 
 void BombermanApplication::initWindow() {
+  this->gameState = MENU;
+
   std::ifstream configFile(RESOURCE_PATH(configFile.json));
 
   nlohmann::json j;
@@ -38,10 +40,15 @@ void BombermanApplication::initPlayers() {
   ));
 }
 
+void BombermanApplication::initMenu() {
+  this->menu.init(this->window->getSize());
+}
+
 BombermanApplication::BombermanApplication() {
   this->initWindow();
   this->initMap();
   this->initPlayers();
+  this->initMenu();
 
   //std::cout << *this;
 }
@@ -68,24 +75,68 @@ void BombermanApplication::update() {
   while (this->window->pollEvent(event)) {
     if (event.Event::type == sf::Event::Closed) {
       this->window->close();
-    }
-    if(event.Event::KeyPressed && event.Event::key.code == sf::Keyboard::Escape) {
-      this->window->close();
+    } else if (event.type == event.Event::KeyPressed && this->gameState == MENU) {
+      switch(event.key.code) {
+        case sf::Keyboard::Escape:
+          this->window->close();
+          break;
+        case sf::Keyboard::Up:
+          this->menu.update(1);
+          break;
+        case sf::Keyboard::Down:
+          this->menu.update(-1);
+          break;
+        case sf::Keyboard::Enter:
+
+          if (this->menu.getSelectedItem() == 0) {
+            this->gameState = 1;
+
+          } else if (this->menu.getSelectedItem() == 1) {
+            this->window->close();
+          }
+          break;
+        default:
+          break;
+      }
     }
   }
 
-  for (int i = 0; i < players.size(); i++) {
-    this->players[i]->update(this->deltaTime, this->map);
+  if (this->gameState == GAME_OVER && sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+    this->gameState = MENU;
+    this->restart();
   }
+
+  if (this->gameState == 1) {
+    for (int i = 0; i < players.size(); i++) {
+      this->players[i]->update(this->deltaTime, this->map);
+
+      if (this->players[i]->isDead()) {
+        this->gameState = GAME_OVER;
+        break;
+      }
+    }
+  }
+}
+
+void BombermanApplication::restart() {
+
+
 }
 
 void BombermanApplication::render() {
   this->window->clear();
 
-  this->window->draw(*this->map);
+  if (this->gameState == MENU) {
+    this->window->draw(this->menu);
+  } else if (this->gameState == RUN || this->gameState == GAME_OVER) {
+    this->window->draw(*this->map);
+    for (int i = 0; i < players.size(); i++) {
+      this->window->draw(*this->players[i]);
+    }
 
-  for (int i = 0; i < players.size(); i++) {
-    this->window->draw(*this->players[i]);
+    if (this->gameState == GAME_OVER) {
+      this->menu.drawGameOver(this->window);
+    }
   }
 
   this->window->display();
@@ -93,11 +144,6 @@ void BombermanApplication::render() {
 
 std::ostream& operator<<(std::ostream& os, const BombermanApplication& application)
 {
-#ifdef DEBUG
-  os << "Developer Mode ON!"
-  << "\n";
-#endif
-
   for (auto& p : application.players) {
     os
     << "-----------Player-----------\n"
@@ -113,4 +159,8 @@ std::ostream& operator<<(std::ostream& os, const BombermanApplication& applicati
 
   return os;
 }
+
+
+
+
 

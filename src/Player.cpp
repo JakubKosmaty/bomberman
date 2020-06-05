@@ -56,6 +56,15 @@ bool Player::checkCollision(const std::vector<int> map) const {
   return collision == 0 || collision == 2 || collision == 3;
 }
 
+#include <iostream>
+
+bool Player::checkIsDead(const std::vector<int> map) const {
+  int x = this->body.getPosition().x / 64;
+  int y = this->body.getPosition().y / 64;
+
+  return map[x + y * 13] == 4;
+}
+
 void Player::update(float deltaTime, TileMap* tileMap) {
   this->bomb.check(tileMap);
 
@@ -66,6 +75,11 @@ void Player::update(float deltaTime, TileMap* tileMap) {
     bombPos.x = this->body.getPosition().x / 64;
     bombPos.y = this->body.getPosition().y / 64;
     this->bomb.spawn(bombPos, tileMap);
+  }
+
+  if (this->checkIsDead(tileMap->layers[1]->getMapArray())) {
+    this->dead = true;
+    return;
   }
 
   if (this->isGoing) {
@@ -131,5 +145,9 @@ const sf::RectangleShape &Player::getBody() const {
 
 float Player::getSpeed() const {
   return speed;
+}
+
+bool Player::isDead() const {
+  return dead;
 }
 

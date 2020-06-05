@@ -21,6 +21,12 @@ private:
     Inputer* inputer;
     Bomb bomb;
 
+    bool dead;
+public:
+    bool isDead() const;
+
+private:
+
     unsigned row;
     float speed;
 
@@ -34,6 +40,7 @@ private:
     sf::Vector2f directionToStep(int dir);
 
     bool checkCollision(const std::vector<int> map) const;
+    bool checkIsDead(const std::vector<int> map) const;
 
 public:
     Player(const std::string& texture, sf::Vector2f playerSize, sf::Vector2f playerPos, sf::Vector2u imageCount, float switchTime, float speed, Inputer* inputer);

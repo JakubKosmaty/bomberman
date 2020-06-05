@@ -51,3 +51,4 @@ void Layer::draw(sf::RenderTarget &target, sf::RenderStates states) const {
 const std::vector<int> &Layer::getMapArray() const {
   return mapArray;
 }
+

@@ -25,6 +25,7 @@ public:
     Layer();
 
     void update();
+    void changeTile(int pos, int val);
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

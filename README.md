@@ -23,5 +23,6 @@ Similar to original bomberman game - https://en.wikipedia.org/wiki/Bomberman
 
 ### Screenshots
 
+![Game Preview](https://i.imgur.com/kGVbW42.png)
 ![Game Preview](https://i.imgur.com/4XrJil7.png)
 ![Game Preview](https://i.imgur.com/KvIILZw.png)

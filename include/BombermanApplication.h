@@ -16,8 +16,14 @@
 #include "Player.h"
 #include "Player1Inputer.h"
 #include "Player2Inputer.h"
+#include "Menu.h"
 
-//#define DEBUG
+
+enum GAME_STATE {
+    MENU = 0,
+    RUN,
+    GAME_OVER
+};
 
 class BombermanApplication {
 private:
@@ -25,16 +31,21 @@ private:
 
     TileMap* map;
     std::vector<Player*> players;
+    Menu menu;
 
     float deltaTime;
     sf::Clock clock;
 
+    int gameState;
+
     void initWindow();
     void initMap();
     void initPlayers();
+    void initMenu();
 
     void update();
     void render();
+    void restart();
 
     friend std::ostream& operator<<(std::ostream& os, const BombermanApplication& application);
 

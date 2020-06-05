@@ -134,7 +134,6 @@ void Bomb::cleanFire(TileMap* tileMap) {
 
   this->clean = false;
   this->used = false;
-
 }
 
 bool Bomb::isUsed() const {
