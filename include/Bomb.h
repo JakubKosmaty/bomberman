@@ -16,21 +16,18 @@ private:
 
     int radius;
     bool clean;
-public:
-    bool isUsed() const;
-
-private:
     bool used;
 
     void setFire(TileMap* tileMap);
     void cleanFire(TileMap* tileMap);
 
 public:
-    Bomb(int radius = 4);
-    virtual ~Bomb();
+    Bomb(int radius);
 
     void spawn(sf::Vector2i bombPos, TileMap* tileMap);
     void check(TileMap* tileMap);
+
+    bool isUsed() const;
 };
 
 

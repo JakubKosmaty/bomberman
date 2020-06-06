@@ -4,10 +4,6 @@
 
 #include "TileMap.h"
 
-TileMap::TileMap() {
-
-}
-
 void TileMap::draw(sf::RenderTarget &target, sf::RenderStates states) const {
   for (int i = 0; i < this->layers.size(); i++) {
     this->layers[i]->draw(target, states);

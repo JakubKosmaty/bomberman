@@ -4,19 +4,9 @@
 
 #include "Menu.h"
 
-
-Menu::Menu() {
-}
-
-Menu::~Menu() {
-
-}
-
-#include <iostream>
-
 void Menu::init(sf::Vector2u windowSize) {
   this->selectedItem = 0;
-  this->backgroundTexture.loadFromFile(RESOURCE_PATH(backgroundTitle.jpg));
+  this->backgroundTexture.loadFromFile(RESOURCE_PATH(background.jpg));
   this->background.setTexture(this->backgroundTexture);
   this->background.setScale((float)windowSize.x / this->backgroundTexture.getSize().x, (float)windowSize.y / this->backgroundTexture.getSize().y);
 
@@ -25,6 +15,7 @@ void Menu::init(sf::Vector2u windowSize) {
   this->addButton("Play", 100, (float)windowSize.x / 2.f, (float)windowSize.y / 2.f + 50.f);
   this->addButton("Exit", 100, (float)windowSize.x / 2.f, (float)windowSize.y / 2.f + 150.f);
   this->addButton("GAME OVER", 100, (float)windowSize.x / 2.f, (float)windowSize.y / 2.f);
+  this->addButton("Press  Enter", 30, (float)windowSize.x / 2.f, (float)windowSize.y / 2.f + 70.f);
 
   this->buttons[this->selectedItem].setFillColor(sf::Color::Red);
 }
@@ -42,7 +33,7 @@ void Menu::addButton(std::string name, unsigned int size, float posX, float posY
 void Menu::update(int key) {
   this->buttons[this->selectedItem].setFillColor(sf::Color::White);
 
-  int buttonsSize = this->buttons.size() - 1;
+  int buttonsSize = this->buttons.size() - 2;
 
   if (this->selectedItem - key >= buttonsSize) {
     this->selectedItem = 0;
@@ -59,22 +50,23 @@ void Menu::update(int key) {
 void Menu::draw(sf::RenderTarget &target, sf::RenderStates states) const {
   target.draw(this->background);
 
-  for (int i = 0; i < this->buttons.size() - 1; i++) {
+  for (int i = 0; i < this->buttons.size() - 2; i++) {
     target.draw(this->buttons[i]);
   }
 }
 
-int Menu::getSelectedItem() const {
-  return selectedItem;
-}
-
 void Menu::drawGameOver(sf::RenderTarget* target) {
   target->draw(this->buttons[2]);
-
+  target->draw(this->buttons[3]);
 }
 
+void Menu::resetSelectedItem() {
+  this->buttons[this->selectedItem].setFillColor(sf::Color::White);
+  this->selectedItem = 0;
+  this->buttons[this->selectedItem].setFillColor(sf::Color::Red);
+}
 
-
-
-
+const int Menu::getSelectedItem() const {
+  return selectedItem;
+}
 

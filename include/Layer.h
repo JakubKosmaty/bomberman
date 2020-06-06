@@ -20,13 +20,11 @@ private:
 
 public:
     std::vector<int> mapArray;
-    const std::vector<int> &getMapArray() const;
 
     Layer();
+    Layer(const Layer& layer);
 
     void update();
-    void changeTile(int pos, int val);
-
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 

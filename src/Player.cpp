@@ -4,14 +4,13 @@
 
 #include "Player.h"
 
-Player::Player(const std::string& texture, sf::Vector2f playerSize, sf::Vector2f playerPos, sf::Vector2u imageCount, float switchTime, float speed, Inputer* inputer) : animation(texture, imageCount, switchTime), inputer(inputer) {
+Player::Player(const std::string& texture, sf::Vector2f playerSize, sf::Vector2f playerPos, sf::Vector2u imageCount, float switchTime, float speed, Inputer* inputer, int radius) : animation(texture, imageCount, switchTime), inputer(inputer), bomb(radius) {
   this->speed = speed;
   this->row = 0;
-
   this->direction = -1;
   this->isGoing = false;
   this->playerPos = this->body.getPosition();
-
+  this->dead = false;
 
   this->body.setSize(playerSize);
   this->body.setOrigin(playerSize.x / 2, playerSize.y > 64 ? 96 : 32);
@@ -49,16 +48,14 @@ sf::Vector2f Player::directionToStep(int dir) {
   return {0, 0};
 }
 
-bool Player::checkCollision(const std::vector<int> map) const {
+const bool Player::checkCollision(const std::vector<int>& map) const {
   int x = this->destination.x / 64;
   int y = this->destination.y / 64;
   int collision = map[x + y * 13];
   return collision == 0 || collision == 2 || collision == 3;
 }
 
-#include <iostream>
-
-bool Player::checkIsDead(const std::vector<int> map) const {
+const bool Player::checkIsDead(const std::vector<int>& map) const {
   int x = this->body.getPosition().x / 64;
   int y = this->body.getPosition().y / 64;
 
@@ -68,22 +65,15 @@ bool Player::checkIsDead(const std::vector<int> map) const {
 void Player::update(float deltaTime, TileMap* tileMap) {
   this->bomb.check(tileMap);
 
-  int input = this->inputer->getInput();
-
-  if (input == 4 && !this->bomb.isUsed()) {
-    sf::Vector2i bombPos;
-    bombPos.x = this->body.getPosition().x / 64;
-    bombPos.y = this->body.getPosition().y / 64;
-    this->bomb.spawn(bombPos, tileMap);
-  }
-
-  if (this->checkIsDead(tileMap->layers[1]->getMapArray())) {
+  if (this->checkIsDead(tileMap->layers[1]->mapArray)) {
     this->dead = true;
     return;
   }
 
+  int input = this->inputer->getInput();
+
   if (this->isGoing) {
-    if (checkCollision(tileMap->layers[0]->getMapArray())|| checkCollision(tileMap->layers[1]->getMapArray())) {
+    if (checkCollision(tileMap->layers[0]->mapArray)|| checkCollision(tileMap->layers[1]->mapArray)) {
       this->isGoing = false;
       return;
     }
@@ -109,6 +99,14 @@ void Player::update(float deltaTime, TileMap* tileMap) {
   }
 
   if (input == -1) {
+    return;
+  }
+
+  if (input == 4 && !this->bomb.isUsed()) {
+    sf::Vector2i bombPos;
+    bombPos.x = this->body.getPosition().x / 64;
+    bombPos.y = this->body.getPosition().y / 64;
+    this->bomb.spawn(bombPos, tileMap);
     return;
   }
 
@@ -143,11 +141,11 @@ const sf::RectangleShape &Player::getBody() const {
   return body;
 }
 
-float Player::getSpeed() const {
+const float Player::getSpeed() const {
   return speed;
 }
 
-bool Player::isDead() const {
+const bool Player::isDead() const {
   return dead;
 }
 

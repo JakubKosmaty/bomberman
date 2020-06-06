@@ -10,27 +10,23 @@
 
 class Menu : public sf::Drawable {
 private:
-    std::vector<sf::Text> buttons;
     sf::Font font;
-
     sf::Texture backgroundTexture;
-
-private:
     sf::Sprite background;
-
+    std::vector<sf::Text> buttons;
     int selectedItem;
 
-public:
-    Menu();
-    virtual ~Menu();
-
-    int getSelectedItem() const;
-
-    void init(sf::Vector2u windowSize);
     void addButton(const std::string name, unsigned size, float posX, float posY);
+
+public:
+    void init(sf::Vector2u windowSize);
     void update(int key);
+    void resetSelectedItem();
+
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
     void drawGameOver(sf::RenderTarget* target);
+
+    const int getSelectedItem() const;
 };
 
 

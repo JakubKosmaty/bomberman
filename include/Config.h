@@ -39,42 +39,14 @@ private:
     unsigned width;
     unsigned height;
     unsigned tileSize;
-    std::string texture;
 
 public:
     unsigned int getWidth() const;
     unsigned int getHeight() const;
     unsigned int getTileSize() const;
     const std::vector<int> &getData() const;
-    const std::string &getTexture() const;
 
     friend void from_json(const nlohmann::json& j, MapConfig &map);
-};
-
-class PlayersConfig {
-private:
-    std::string texture;
-    float width;
-    float height;
-    int spawnX;
-    int spawnY;
-    int animationX;
-    int animationY;
-    float switchTime;
-    float speed;
-
-public:
-    const std::string &getTexture() const;
-    float getWidth() const;
-    float getHeight() const;
-    int getSpawnX() const;
-    int getSpawnY() const;
-    int getAnimationX() const;
-    int getAnimationY() const;
-    float getSwitchTime() const;
-    float getSpeed() const;
-
-    friend void from_json(const nlohmann::json& j, PlayersConfig &players);
 };
 
 class Config {

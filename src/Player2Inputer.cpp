@@ -21,7 +21,7 @@ int Player2Inputer::getInput() {
     return 3;
   }
 
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::RShift)) {
     return 4;
   }
 

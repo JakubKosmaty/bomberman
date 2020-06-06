@@ -8,16 +8,13 @@
 #include <iostream>
 #include <fstream>
 #include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Audio.hpp>
-#include <Config.h>
 
+#include "Config.h"
 #include "TileMap.h"
 #include "Player.h"
 #include "Player1Inputer.h"
 #include "Player2Inputer.h"
 #include "Menu.h"
-
 
 enum GAME_STATE {
     MENU = 0,
@@ -28,15 +25,14 @@ enum GAME_STATE {
 class BombermanApplication {
 private:
     sf::RenderWindow* window;
-
+    Menu menu;
     TileMap* map;
     std::vector<Player*> players;
-    Menu menu;
+
+    GAME_STATE gameState;
 
     float deltaTime;
     sf::Clock clock;
-
-    int gameState;
 
     void initWindow();
     void initMap();

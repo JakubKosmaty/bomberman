@@ -14,7 +14,7 @@ Similar to original bomberman game - https://en.wikipedia.org/wiki/Bomberman
 #### Player 2
 
 - :running: Movement - <kbd>:arrow_left:</kbd> <kbd>:arrow_up:</kbd> <kbd>:arrow_down:</kbd> <kbd>:arrow_right:</kbd>
-- :bomb: Place Bomb - <kbd>Enter</kbd>
+- :bomb: Place Bomb - <kbd>Shift</kbd>
 
 ### Built With
 
@@ -26,3 +26,4 @@ Similar to original bomberman game - https://en.wikipedia.org/wiki/Bomberman
 ![Game Preview](https://i.imgur.com/kGVbW42.png)
 ![Game Preview](https://i.imgur.com/4XrJil7.png)
 ![Game Preview](https://i.imgur.com/KvIILZw.png)
+![Game Preview](https://i.imgur.com/DlUchCY.png)

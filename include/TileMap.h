@@ -6,21 +6,13 @@
 #define BOMBERMAN_TILEMAP_H
 
 #include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Audio.hpp>
-#include "Config.h"
 #include "Layer.h"
 
 class TileMap : public sf::Drawable {
-private:
-
-
 public:
     std::vector<Layer*> layers;
 
-    TileMap();
     virtual ~TileMap();
-
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 

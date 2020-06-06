@@ -20,10 +20,10 @@ private:
 public:
     Animation(const std::string& texture, sf::Vector2u imageCount, float switchTime);
 
+    void update(int row, float deltaTime, bool faceRight);
+
     const sf::Texture &getTexture() const;
     const sf::IntRect &getUvRect() const;
-
-    void update(int row, float deltaTime, bool faceRight);
 };
 
 

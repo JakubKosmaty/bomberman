@@ -5,7 +5,6 @@
 #include "Layer.h"
 
 Layer::Layer() {
-
   const MapConfig &map = Config::getConfig().getMap();
   this->mapArray = map.getData();
   this->mapWidth = map.getWidth();
@@ -17,6 +16,12 @@ Layer::Layer() {
   this->vertexArray.setPrimitiveType(sf::Quads);
   this->vertexArray.resize(map.getWidth() * map.getHeight() * 4);
   this->update();
+}
+
+Layer::Layer(const Layer &layer) {
+  this->tileSet = layer.tileSet;
+  this->vertexArray = layer.vertexArray;
+  this->mapArray = layer.mapArray;
 }
 
 void Layer::update() {
@@ -47,8 +52,3 @@ void Layer::draw(sf::RenderTarget &target, sf::RenderStates states) const {
   states.texture = &this->tileSet;
   target.draw(this->vertexArray, states);
 }
-
-const std::vector<int> &Layer::getMapArray() const {
-  return mapArray;
-}
-
